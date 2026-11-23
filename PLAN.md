@@ -93,3 +93,7 @@ Voor de demo kies je een cadeau, doe je het in je mandje, log je in en kies je t
 - [x] Met een nieuwe database de installatie en demodata doorlopen. Tests richten op het bestelpad, prijzen en drempels, dubbele orders, login, klanttoegang en bestandsuploads. Daarna de volledige demo nog een keer in de browser doorlopen.
 
 **Afgerond deel 6.** Deel 6 is getest. Ik heb een product aangepast en uit het assortiment gehaald terwijl de eerdere order gelijk bleef. Een nieuwsbericht bleef verborgen tot publicatie. Ik heb als klant en als beheerder de demo doorlopen, inclusief beide formulieren en het downloaden van de bijlage. De installatie en seeds zijn ook op een lege testdatabase gedraaid.
+
+## Demo starten met Docker
+
+- [x] PHP en MySQL via Docker Compose opstarten. Bij de eerste start het schema en de demodata klaarzetten. Bestellingen, accounts en uploads bewaren in volumes. De startopdracht en de beheeropdracht staan in de README.

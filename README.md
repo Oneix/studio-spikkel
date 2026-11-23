@@ -2,7 +2,25 @@
 
 Een Nederlandse cadeauwinkel gebouwd met CakePHP 5 en MySQL. Het projectplan staat in [PLAN.md](PLAN.md).
 
-## Lokaal starten
+## Starten met Docker
+
+Start Docker Desktop of Docker Engine met Compose. Voer dit uit in de projectmap.
+
+~~~sh
+docker compose up --build -d --wait
+~~~
+
+Open [Studio Spikkel in Docker](http://127.0.0.1:8080/). De eerste start bouwt PHP en Apache, start MySQL en laadt het schema en de demodata. MySQL, uploads en de lokale beveiligingssleutel staan in Docker-volumes.
+
+Maak in deze demo een winkelaccount aan. Gebruik daarna het e-mailadres van dat account om beheerrechten toe te kennen.
+
+~~~sh
+docker compose exec --user www-data web php bin/cake.php beheer grant jouw@email.nl
+~~~
+
+Met `docker compose down` stop je de demo. De bestellingen en uploads blijven bewaard. Als poort 8080 bezet is, zet dan bijvoorbeeld `SPICKEL_PORT=8081` in een lokaal `.env`-bestand en open de winkel op die poort.
+
+## Lokaal starten op Windows
 
 ```powershell
 .\start-spikkel.bat

@@ -1,0 +1,44 @@
+services:
+  web:
+    build: .
+    ports:
+      - "127.0.0.1:${SPICKEL_PORT:-8080}:80"
+    environment:
+      DEBUG: "false"
+      APP_FULL_BASE_URL: "http://127.0.0.1:${SPICKEL_PORT:-8080}"
+      SPICKEL_DB_PASSWORD: "${SPICKEL_DB_PASSWORD:-spikkel-local-demo}"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - shop-storage:/var/www/html/storage
+    healthcheck:
+      test: ["CMD", "php", "-r", "exit(file_get_contents('http://127.0.0.1/cadeaus') === false ? 1 : 0);"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 20s
+
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: studio_spikkel
+      MYSQL_USER: spikkel
+      MYSQL_PASSWORD: "${SPICKEL_DB_PASSWORD:-spikkel-local-demo}"
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+    volumes:
+      - shop-db:/var/lib/mysql
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          MYSQL_PWD="$${MYSQL_PASSWORD}" mysql --protocol=tcp --host=127.0.0.1
+          --user="$${MYSQL_USER}" --database="$${MYSQL_DATABASE}" --execute='SELECT 1'
+      interval: 3s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+volumes:
+  shop-db:
+  shop-storage:
