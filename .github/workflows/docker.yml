@@ -48,7 +48,7 @@ jobs:
               require "vendor/autoload.php";
               require "config/bootstrap.php";
               $db = Cake\Datasource\ConnectionManager::get("default");
-              $saved = $db->execute("SELECT COUNT(*) FROM contact_messages WHERE email = ?", ["docker@example.test"])->fetchColumn();
+              $saved = $db->execute("SELECT COUNT(*) FROM contact_messages WHERE email = ?", ["docker@example.test"])->fetchColumn(0);
               exit((int)$saved === 1 && file_get_contents("storage/uploads/.docker-check") === "writable" ? 0 : 1);
           '
       - name: Toon logs bij een fout
